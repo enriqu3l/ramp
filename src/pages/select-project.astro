@@ -1,14 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ColorPicker from '../components/ColorPicker.vue';
-import Card from '../components/Card.astro';
+import ImportProject from '../components/ImportProject.vue';
+import NewProject from '../components/NewProject.vue';
+import ProjectList from '../components/ProjectList.vue';
 ---
 
 <Layout title="Select Project">
 	<main>
 		<h1>Select Project</h1>
 		<button class="btn btn-accent">Open Project</button>
-		<ColorPicker client:load />
 	</main>
 </Layout>
 
