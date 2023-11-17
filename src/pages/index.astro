@@ -5,89 +5,85 @@ import Card from '../components/Card.astro';
 
 <Layout title="RAMP">
 	<main>
-		<h1><span class="text-gradient">RAMP</span></h1>
-		<p class="instructions">
-			Looking to elevate your organization's performance and boost team efficiency?
-			<br />Look no further! I am thrilled to unveil our cutting-edge <strong>RAMP</strong> assessment platform, designed to revolutionize the way you evaluate your team's processes and capabilities.
-		</p>
-		<ul role="list" class="link-card-grid">
+		<div class="container mx-auto ">
+			<h1><span class="text-gradient">RAMP</span></h1>
+			<p class="instructions">
+				Looking to elevate your organization's performance and boost team efficiency?
+				<br />Look no further! I am thrilled to unveil our cutting-edge <strong>RAMP</strong> assessment platform, designed to revolutionize the way you evaluate your team's processes and capabilities.
+			</p>
+		</div>
+		<div class="container mx-auto ">
 			<Card
 				href="select-project"
 				title="Team Health Check"
 				body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+				img="/public/team_health_check.png"
 			/>
 			<Card
 				href="select-project"
 				title="QA Assessment"
-				body="El propósito es evaluar de cerca el procesos de prueba, herramientas utilizadas, colaboración interdepartamental y la efectividad general de la estrategias de QA. Esto brindará una visión integral del desempeño actual y permitirá trazar un camino claro hacia la mejora continua."
+				body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+				img="/public/qa_assessment.png"
 			/>
 			<Card
 				href="select-project"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
+				title="Team Health Check"
+				body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+				img="/public/team_health_check.png"
 			/>
 			<Card
 				href="select-project"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
+				title="QA Assessment"
+				body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+				img="/public/qa_assessment.png"
 			/>
-		</ul>
-		<br>
-		<div class="card w-96 bg-base-100 shadow-xl">
-			<figure><img src="/team_health_check.png" alt="Shoes" /></figure>
-			<div class="card-body">
-			  <h2 class="card-title">Team Health Check</h2>
-			  <p>If a dog chews shoes whose shoes does he choose?</p>
-			  <div class="card-actions justify-end">
-				<button onclick="location.href='select-project';" class="btn btn-primary">Start</button>
-			  </div>
+		</div>
+		<div class="container mx-auto ">
+			<div class="stats shadow">
+				<div class="stat">
+				<div class="stat-figure text-secondary">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+				</div>
+				<div class="stat-title">Downloads</div>
+				<div class="stat-value">31K</div>
+				<div class="stat-desc">Jan 1st - Feb 1st</div>
+				</div>
+				<div class="stat">
+				<div class="stat-figure text-secondary">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+				</div>
+				<div class="stat-title">New Users</div>
+				<div class="stat-value">4,200</div>
+				<div class="stat-desc">↗︎ 400 (22%)</div>
+				</div>
+				<div class="stat">
+				<div class="stat-figure text-secondary">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+				</div>
+				<div class="stat-title">New Registers</div>
+				<div class="stat-value">1,200</div>
+				<div class="stat-desc">↘︎ 90 (14%)</div>
+				</div>
 			</div>
 		</div>
-		<div class="card w-96 bg-base-100 shadow-xl">
-			<figure><img src="/qa_assessment.png" alt="Shoes" /></figure>
-			<div class="card-body">
-			  <h2 class="card-title">QA Assessment</h2>
-			  <p>If a dog chews shoes whose shoes does he choose?</p>
-			  <div class="card-actions justify-end">
-				<button onclick="location.href='select-project';" class="btn btn-primary">Start</button>
-			  </div>
-			</div>
-		</div>
-		<br>
-		<div class="stats shadow">
-			<div class="stat">
-			  <div class="stat-figure text-secondary">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-			  </div>
-			  <div class="stat-title">Downloads</div>
-			  <div class="stat-value">31K</div>
-			  <div class="stat-desc">Jan 1st - Feb 1st</div>
-			</div>
-			<div class="stat">
-			  <div class="stat-figure text-secondary">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-			  </div>
-			  <div class="stat-title">New Users</div>
-			  <div class="stat-value">4,200</div>
-			  <div class="stat-desc">↗︎ 400 (22%)</div>
-			</div>
-			<div class="stat">
-			  <div class="stat-figure text-secondary">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-			  </div>
-			  <div class="stat-title">New Registers</div>
-			  <div class="stat-value">1,200</div>
-			  <div class="stat-desc">↘︎ 90 (14%)</div>
-			</div>
-		  </div>
 	</main>
 </Layout>
 
 <style>
+	.card{
+		margin: 20px 20px;
+	}
+	.container{
+		width: 1200px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 	main {
 		margin: auto;
 		padding: 1rem;
-		width: 800px;
+		width: 100%;
 		max-width: calc(100% - 2rem);
 		color: white;
 		font-size: 20px;
