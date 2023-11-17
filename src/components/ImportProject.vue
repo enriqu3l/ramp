@@ -1,13 +1,28 @@
-<template>
-    <div>
-        <input type="text" v-model="color" />
-        <p> {{ color }}</p>
-    </div>
-</template>
+<script lang="ts">
+import { defineComponent } from "vue";
 
-<script setup>
-import { ref } from "vue";
-const color = ref("green");
+export default defineComponent({
+  setup() {
+    return {};
+  },
+  computed: {
+  },
+  mounted() {
+  },
+});
 </script>
 
-<style scoped></style>
+<template>
+  <div>
+    <label class="btn btn-primary" for="importFile">    
+        Import Project
+    </label>
+    <input 
+        type="file"
+        style="visibility:hidden"
+        accept=".csv"
+        id="importFile"
+        onInput={handleChange}
+        />
+  </div>
+</template>
