@@ -1,17 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ImportProject from '../components/ImportProject.vue';
-import NewProject from '../components/NewProject.vue';
-import ProjectList from '../components/ProjectList.vue';
 
-
+//TODO: Read current project from the local storage to know the type of assesment selected
 ---
-<Layout title="Select Project">
+
+<Layout title="Dashboard">
 	<main>
-		<h1>Select Project</h1>
-		<ImportProject />
-		<ProjectList />
-		<NewProject client:load />
+		<h1>Dashboard</h1>
 	</main>
 </Layout>
 
