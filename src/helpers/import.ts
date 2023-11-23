@@ -14,7 +14,7 @@ export function importCsv(csvStr: string): ImportedProjectData {
   let projectData: ProjectData = {
     votingSessions: votingSessionsFromCsv(votingSessions),
     actionItems: actionItemsFromCsv(actionItems),
-    attributeNumber: 0,
+    groupNumber: 0,
     type: metaData.app,
   };
 
@@ -67,7 +67,7 @@ function actionItemsFromCsv(actionItems: string): ActionItem[] {
     return {
       task: rows[0][ActionItemsColumns.title],
       date: rows[0][ActionItemsColumns.date],
-      attribute: rows[0][ActionItemsColumns.attribute],
+      group: rows[0][ActionItemsColumns.attribute],
       owner: rows[0][ActionItemsColumns.owner],
       status: rows[0][ActionItemsColumns.status],
       notes: rows[0][ActionItemsColumns.description],
@@ -77,7 +77,7 @@ function actionItemsFromCsv(actionItems: string): ActionItem[] {
 
 function votingSessionsFromCsv(sessions: string): VotingSession[] {
   // headers separate each voting session
-  const delim = "Date,Attribute,Question,up,down,notesUp,notesDown\r\n";
+  const delim = "Date,Group,Question,up,down,notesUp,notesDown\r\n";
   const dateColumn = 0;
 
   const tables = sessions
@@ -87,50 +87,56 @@ function votingSessionsFromCsv(sessions: string): VotingSession[] {
     .map((x) => x.data);
 
   return tables.map((rows: string[][]) => {
-    const data: VotingSession = {
-      attributes: [],
+    const votingSession: VotingSession = {
+      groups: [],
       date: rows[0][dateColumn],
     };
 
     rows.forEach((row) => {
       const [
         _date,
-        attribute,
+        group,
         question,
         up = "0",
         down = "0",
         notesUp,
         notesDown,
       ] = row;
-      if (!attribute) return;
+      if (!group) return;
 
-      let attributeIndex = data.attributes.findIndex(
-        (x) => x.title === attribute
+      let attributeIndex = votingSession.groups.findIndex(
+        (x) => x.title === group
       );
       if (attributeIndex === -1) {
-        attributeIndex = data.attributes.length;
-        data.attributes.push({
-          title: attribute,
+        attributeIndex = votingSession.groups.length;
+        votingSession.groups.push({
+          title: group,
+          description: "",
+          examples: {
+            good: "",
+            meh: "",
+            bad: ""
+          },
           questions: [],
           votes: [],
           notes: [],
         });
       }
 
-      data.attributes[attributeIndex].questions.push({
+      votingSession.groups[attributeIndex].questions.push({
         question,
         weight: 1,
       });
-      data.attributes[attributeIndex].votes.push({
+      votingSession.groups[attributeIndex].votes.push({
         up: parseInt(up),
         down: parseInt(down),
       });
-      data.attributes[attributeIndex].notes.push({
+      votingSession.groups[attributeIndex].notes.push({
         up: notesUp,
         down: notesDown,
       });
     });
 
-    return data;
+    return votingSession;
   });
 }

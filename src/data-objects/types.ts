@@ -1,9 +1,15 @@
-export interface Attribute {
+export interface Group {
   title: string;
-  questions: AttributeQuestion[];
+  description: string;
+  examples: GroupExamples
+  questions: GroupQuestion[];
 }
-
-export interface AttributeQuestion {
+export interface GroupExamples {
+  good: string;
+  meh: string;
+  bad: string;
+}
+export interface GroupQuestion {
   question: string;
   weight: number;
 }
@@ -17,20 +23,20 @@ export interface Notes {
   down: string;
 }
 
-export interface AttributeWithVotes extends Attribute {
+export interface GroupWithVotes extends Group {
   votes: Votes[];
   notes: Notes[];
 }
 
 export interface VotingSession {
   date: string;
-  attributes: AttributeWithVotes[];
+  groups: GroupWithVotes[];
 }
 
 export interface ActionItem {
   task: string;
   date: string;
-  attribute: string;
+  group: string;
   owner: string;
   status: string;
   notes: string;
@@ -46,6 +52,6 @@ export interface Meta {
 export interface ProjectData {
   votingSessions: VotingSession[];
   actionItems: ActionItem[];
-  attributeNumber: number;
+  groupNumber: number;
   type?: string;
 }

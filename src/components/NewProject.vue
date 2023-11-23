@@ -1,10 +1,12 @@
 <script lang="ts">
     import { appNames } from "../helpers/constants";
+    import { createNewContext } from "../helpers/contextOperations";
 
     export default{
         data() {
             return {
-                projectName: ""
+                projectName: "",
+                projectType: ""
             }
         },
         methods: {
@@ -12,14 +14,12 @@
                 e.preventDefault();
                 const projectExists = window.localStorage.getItem(this.projectName);
 
+                let context = createNewContext(appNames.TEAM_HEALTH);
+
                 if (!projectExists) {
                     window.localStorage.setItem(
                         this.projectName,
-                        JSON.stringify({
-                        type: appNames.TEAM_HEALTH,
-                        votingSessions: [],
-                        actionItems: [],
-                        })
+                        JSON.stringify(context)
                     );
                     window.localStorage.setItem("currentProject", this.projectName);
                     window.location.href = "dashboard";
