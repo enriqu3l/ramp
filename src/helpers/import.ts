@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { type ActionItem, type ProjectData, type VotingSession } from "../data-objects/types";
+import { type ActionItem, type ProjectData, type RunSession } from "../data-objects/types";
 
 export interface ImportedProjectData {
   name: string;
@@ -8,11 +8,11 @@ export interface ImportedProjectData {
 
 export function importCsv(csvStr: string): ImportedProjectData {
   const delim = /[=#].*\r\n/; // delimiter is any line that starts with # or =
-  const [meta, votingSessions, actionItems] = csvStr.split(delim);
+  const [meta, runSessions, actionItems] = csvStr.split(delim);
   const metaData = metadataFromCsv(meta);
 
   let projectData: ProjectData = {
-    votingSessions: votingSessionsFromCsv(votingSessions),
+    runSessions: runSessionsFromCsv(runSessions),
     actionItems: actionItemsFromCsv(actionItems),
     groupNumber: 0,
     type: metaData.app,
@@ -75,8 +75,8 @@ function actionItemsFromCsv(actionItems: string): ActionItem[] {
   });
 }
 
-function votingSessionsFromCsv(sessions: string): VotingSession[] {
-  // headers separate each voting session
+function runSessionsFromCsv(sessions: string): RunSession[] {
+  // headers separate each run session
   const delim = "Date,Group,Question,up,down,notesUp,notesDown\r\n";
   const dateColumn = 0;
 
@@ -87,7 +87,7 @@ function votingSessionsFromCsv(sessions: string): VotingSession[] {
     .map((x) => x.data);
 
   return tables.map((rows: string[][]) => {
-    const votingSession: VotingSession = {
+    const runSession: RunSession = {
       groups: [],
       date: rows[0][dateColumn],
     };
@@ -104,12 +104,12 @@ function votingSessionsFromCsv(sessions: string): VotingSession[] {
       ] = row;
       if (!group) return;
 
-      let attributeIndex = votingSession.groups.findIndex(
+      let attributeIndex = runSession.groups.findIndex(
         (x) => x.title === group
       );
       if (attributeIndex === -1) {
-        attributeIndex = votingSession.groups.length;
-        votingSession.groups.push({
+        attributeIndex = runSession.groups.length;
+        runSession.groups.push({
           title: group,
           description: "",
           examples: {
@@ -123,20 +123,20 @@ function votingSessionsFromCsv(sessions: string): VotingSession[] {
         });
       }
 
-      votingSession.groups[attributeIndex].questions.push({
+      runSession.groups[attributeIndex].questions.push({
         question,
         weight: 1,
       });
-      votingSession.groups[attributeIndex].votes.push({
+      runSession.groups[attributeIndex].votes.push({
         up: parseInt(up),
         down: parseInt(down),
       });
-      votingSession.groups[attributeIndex].notes.push({
+      runSession.groups[attributeIndex].notes.push({
         up: notesUp,
         down: notesDown,
       });
     });
 
-    return votingSession;
+    return runSession;
   });
 }

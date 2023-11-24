@@ -28,7 +28,7 @@ export interface GroupWithVotes extends Group {
   notes: Notes[];
 }
 
-export interface VotingSession {
+export interface RunSession {
   date: string;
   groups: GroupWithVotes[];
 }
@@ -50,7 +50,7 @@ export interface Meta {
 }
 
 export interface ProjectData {
-  votingSessions: VotingSession[];
+  runSessions: RunSession[];
   actionItems: ActionItem[];
   groupNumber: number;
   type?: string;

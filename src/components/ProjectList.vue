@@ -29,7 +29,7 @@
        
                             return (
                                 data &&
-                                data.hasOwnProperty("votingSessions") &&
+                                data.hasOwnProperty("runSessions") &&
                                 data.hasOwnProperty("actionItems") &&
                                 data.hasOwnProperty("type") &&
                                 data.type === appNames.TEAM_HEALTH
@@ -48,18 +48,18 @@
                     if (typeof dataStr !== "string") {
                         return {
                             name: key,
-                            lastVotingSession: -1,
+                            lastRunSession: -1,
                         };
                     }
                     const data = JSON.parse(dataStr);
                     return {
                         name: key,
-                        lastVotingSession: daysPassed(data.votingSessions.at(-1).date),
+                        lastRunSession: daysPassed(data.runSessions.at(-1).date),
                         type: data.type,
                     };
                 })                
-                .filter((project) => project.lastVotingSession !== -1) // filter out projects that are invalid
-                .sort((a, b) => b.lastVotingSession - a.lastVotingSession); // sort by last voting session oldest first
+                .filter((project) => project.lastRunSession !== -1) // filter out projects that are invalid
+                .sort((a, b) => b.lastRunSession - a.lastRunSession); // sort by last run session oldest first
                 
                 if (this.projectList.length === 0) {
                     return "No projects found";
@@ -93,7 +93,7 @@
                 {{ this.projectsList }}                
                 <tr v-for="project in this.projectList">
                     <td>{{ project.name }}</td>
-                    <td> {{ project.lastVotingSession }} days ago </td>
+                    <td> {{ project.lastRunSession }} days ago </td>
                     <td v-if="project.name !== 'No projects found'">
                         <button
                             class="btn btn-primary"

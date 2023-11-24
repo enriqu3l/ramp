@@ -10,9 +10,7 @@
       };
     },
     methods:{
-      
       onChange: function(e){
-
         const fr = new FileReader();
         
           fr.onload = (e) => {
@@ -27,11 +25,10 @@
             }
 
             window.localStorage.setItem(project.name, JSON.stringify(project.data));
-            // window.location.reload();
+            window.location.reload();
           };
 
         const file = e.target.files[0];
-
         if (file) {
           fr.readAsText(file);
         }
@@ -45,7 +42,6 @@
     <label class="btn btn-primary" for="importFile">    
       Import Project
     </label>
-    
     <input 
       type="file"
       style="visibility:hidden"
@@ -53,7 +49,6 @@
       id="importFile"
       @change="onChange"
       />
-      
     <p v-text="fileName"></p>
 
   </div>
