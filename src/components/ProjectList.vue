@@ -1,32 +1,79 @@
 <script lang="ts">
+
     import { defineComponent } from "vue";
-    
-    //onst items = ref('Item 1','Item 2','Item 3');
+    import { appNames } from "../helpers/constants";
+    import { daysPassed } from "../helpers/date";
 
     export default defineComponent({
         
-        data(){
+        data() {
             return {
                 projectList:[],
-                emptyList: "No projects found"
             }
         },
-        methods:{
-            projectsList: function(){
+        computed: {            
+            projectsList() {
                 
-                const keys = Object.keys(localStorage)
-                var i = keys.length;
+                let projectKeys: string[] = [];
+                if (window?.localStorage) {
 
-                if(keys.length == 0){
-                    this.projectList.push(this.emptyList)
+                    const keys = Object.keys(window.localStorage);                              
+                    projectKeys = keys.filter((key) => {
+                        
+                        const dataStr = window.localStorage.getItem(key);   
+                        if (typeof dataStr !== "string") {
+                            return false;
+                        }
+                        try {
+                            const data = JSON.parse(dataStr);
+       
+                            return (
+                                data &&
+                                data.hasOwnProperty("votingSessions") &&
+                                data.hasOwnProperty("actionItems") &&
+                                data.hasOwnProperty("type") &&
+                                data.type === appNames.TEAM_HEALTH
+                            );
+                        } catch (error) {
+                            return false;
+                        }
+                    });
                 }
-                else{
-                    while ( i-- > 1 ) {            
-                        this.projectList.push(keys[i])
+
+                this.projectList = projectKeys
+                .map((key) => {
+                    
+                    const dataStr = window.localStorage.getItem(key);
+                    
+                    if (typeof dataStr !== "string") {
+                        return {
+                            name: key,
+                            lastVotingSession: -1,
+                        };
                     }
+                    const data = JSON.parse(dataStr);
+                    return {
+                        name: key,
+                        lastVotingSession: daysPassed(data.votingSessions.at(-1).date),
+                        type: data.type,
+                    };
+                })                
+                .filter((project) => project.lastVotingSession !== -1) // filter out projects that are invalid
+                .sort((a, b) => b.lastVotingSession - a.lastVotingSession); // sort by last voting session oldest first
+                
+                if (this.projectList.length === 0) {
+                    return "No projects found";
                 }
+            },
+        },
+        methods: {
+            chooseProject: function(projectName: string) {
+                window.localStorage.setItem("currentProject", projectName);
+                window.location.href = "dashboard";
             }
         },
+
+    
     });
 </script>
 
@@ -37,25 +84,27 @@
             <!-- head -->
             <thead>
             <tr>
-                <th align="left">Project Name</th>
+                <th>Project Name</th>
+                <th>Last Session</th>
+                <th>Action</th>
             </tr>
             </thead>
-            <tbody align="left">
-                <tr v-for="project in projectList" :key="project.id"> <!-- Read projectList array -->
-                <td v-text=project></td> <!--list project-->
-                <td>
-                    <button className="btn btn-primary">Open Project</button>
-                </td>
+            <tbody>
+                {{ this.projectsList }}                
+                <tr v-for="project in this.projectList">
+                    <td>{{ project.name }}</td>
+                    <td> {{ project.lastVotingSession }} days ago </td>
+                    <td v-if="project.name !== 'No projects found'">
+                        <button
+                            class="btn btn-primary"
+                            @click="chooseProject(project.name)"
+                            >
+                                Open Project
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-
-        <button
-            id="newProjectSubmit" 
-            class="btn btn-primary"
-            @click="projectsList"
-            >Storage Project
-        </button>
         <div class="divider divider-info">New personal project</div>      
     </div>
 </template>

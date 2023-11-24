@@ -9,7 +9,6 @@
         inpCount: 0
       };
     },
-    computed:{},
     methods:{
       
       onChange: function(e){
@@ -28,7 +27,7 @@
             }
 
             window.localStorage.setItem(project.name, JSON.stringify(project.data));
-            window.location.reload();
+            // window.location.reload();
           };
 
         const file = e.target.files[0];
