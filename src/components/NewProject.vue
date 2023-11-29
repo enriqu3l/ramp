@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { appNames } from "../helpers/constants";
     import { createNewContext } from "../helpers/contextOperations";
+    import { useActor } from "@xstate/vue";
 
     export default{
         data() {
@@ -9,19 +9,25 @@
                 projectType: ""
             }
         },
+        mounted(){
+            let params = (new URL(window.location.href)).searchParams;
+            this.projectType = params.get("app");
+        },
         methods: {
             submit: function(e) {
                 e.preventDefault();
+                console.log("projectType: ", this.projectType);
                 const projectExists = window.localStorage.getItem(this.projectName);
-
-                let context = createNewContext(appNames.TEAM_HEALTH);
+                
+                let context = createNewContext(this.projectType);
 
                 if (!projectExists) {
+                    let currentProject = this.projectType + "_" + this.projectName;
                     window.localStorage.setItem(
-                        this.projectName,
+                        currentProject,
                         JSON.stringify(context)
                     );
-                    window.localStorage.setItem("currentProject", this.projectName);
+                    window.localStorage.setItem("currentProject", currentProject);
                     window.location.href = "dashboard";
                 } else {
                     alert(

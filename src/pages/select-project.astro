@@ -1,65 +1,72 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ImportProject from '../components/ImportProject.vue';
-import NewProject from '../components/NewProject.vue';
-import ProjectList from '../components/ProjectList.vue';
-
-
+import Layout from "../layouts/Layout.astro";
+import ImportProject from "../components/ImportProject.vue";
+import NewProject from "../components/NewProject.vue";
+import ProjectList from "../components/ProjectList.vue";
 ---
+
 <Layout title="Select Project">
-	<main>
-		<h1>Select Project</h1>
-		<ImportProject client:load/>
-		<ProjectList client:only/>
-		<NewProject client:load/>
-	</main>
+  <main>
+    <h1>Select Project</h1>
+    <ImportProject client:load />
+    <ProjectList client:only />
+    <NewProject client:load />
+  </main>
 </Layout>
 
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const app = params.get("app");
+  console.log("params", app);
+  const h1 = document.querySelector("h1");
+  h1.innerText = app;
+</script>
+
 <style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	.container {
-	height: 200px;
-	position: relative;
-	border: 3px solid green;
-	}
-	.vertical-center {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-	}
-	.center {
-		display: flex;
-		margin: 0;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		-ms-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
-	}
-	.block {
-	display: block;
-	width: 100%;
-	border: none;
-	background-color: #04AA6D;
-	padding: 14px 28px;
-	font-size: 16px;
-	cursor: pointer;
-	text-align: center;
-	}
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .container {
+    height: 200px;
+    position: relative;
+    border: 3px solid green;
+  }
+  .vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  .center {
+    display: flex;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  .block {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #04aa6d;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }
 </style>

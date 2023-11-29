@@ -1,4 +1,4 @@
-import type { Group } from "./types";
+import type { Group } from "../data-objects/types";
 
 const groups: Group[] = [
   {
@@ -11,7 +11,10 @@ const groups: Group[] = [
       meh: "🟡 We use to be proud of our work, however lately it's becoming more and more challenging and we are not having any impact on the project",
       bad: "🔴 Our delivery is inconsistent and does not add any differentiating value to our customers, nor does it reflect quality work.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about delivering value?",
+      weight: 1,
+    }]
   },
   {
     title: "Career Growth",
@@ -22,7 +25,10 @@ const groups: Group[] = [
       meh: "🟡 We rarely have the time to learn or the project is starting to become boring and repetitive.",
       bad: "🔴 The project does not offer us anything new or different. We are doing repetitive tasks with few challenges that allow us to learn new things.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about your career growth?",
+      weight: 1,
+    }]
   },
   {
     title: "Shared Understanding",
@@ -33,7 +39,10 @@ const groups: Group[] = [
       meh: "🟡 We understand what the customer and end users of our application expects from us, but the day to day operations don't allow us to do enough to get there. Also, some stakeholders don't seem to understand or agree on what is what we are here for.",
       bad: "🔴 Our motto is basically “whatever it takes”, which hurts the team. We need to clarify what we do and don't do.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about your career growth?",
+      weight: 1,
+    }]
   },
   {
     title: "Work/Life Balance",
@@ -44,7 +53,10 @@ const groups: Group[] = [
       meh: "🟡 We used to be able to balance our work and personal life. With the recent changes we have more work than expected.",
       bad: "🔴 The amount of daily tasks and/or complexity is overwhelming. We don't have resources enough to keep up to date.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about your work/life balance?",
+      weight: 1,
+    }]
   },
   {
     title: "Team Collaboration",
@@ -55,7 +67,10 @@ const groups: Group[] = [
       meh: "🟡 Agreements and team rules are up-to-date but in practice, they are sometimes disregarded. The team is not fully set on their skills which calls into question the contribution of each of us.",
       bad: "🔴 We identified that the team needs alignment and communication. People are feeling alone, gaps aren't filling at the right pace causing overburden and rework.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about team collaboration?",
+      weight: 1,
+    }]
   },
   {
     title: "Consulting Mindset",
@@ -67,7 +82,10 @@ const groups: Group[] = [
       meh: "🟡 We have gained trust with our clients, but it still takes many conversations before they accept our proposals.",
       bad: "🔴 The team has only executed what the client has asked.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about the team's consulting mindest?",
+      weight: 1,
+    }]
   },
   {
     title: "Customer Relationship",
@@ -79,7 +97,10 @@ const groups: Group[] = [
       meh: "🟡 We have gained trust with our clients, but it still takes many conversations before they accept our proposals.",
       bad: "🔴 We have noticed a certain disengagement from our client due to the lack of attendance in our Sprint ceremonies.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about customer relationship?",
+      weight: 1,
+    }]
   },
   {
     title: "Support",
@@ -91,7 +112,10 @@ const groups: Group[] = [
       🟡 We've got clear definitions of objectives for our highest priority milestones, but not all.`,
       bad: "🔴 Deploying to production is painful, it is not automated, there are not enough tests to trust the pipeline and we depend on manual approvals.",
     },
-    questions: []
+    questions: [{
+      question: "How well do you feel about the support you receive?",
+      weight: 1,
+    }]
   },
 ];
 

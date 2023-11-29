@@ -1,19 +1,25 @@
 <script lang="ts">
 
     import { defineComponent } from "vue";
-    import { appNames } from "../helpers/constants";
+    import { APPS } from "../helpers/constants";
     import { daysPassed } from "../helpers/date";
 
     export default defineComponent({
         
         data() {
             return {
+                projectType: "",
                 projectList:[],
             }
+        },
+        mounted() {
+            let params = (new URL(window.location.href)).searchParams;
+            this.projectType = params.get("app");
         },
         computed: {            
             projectsList() {
                 
+
                 let projectKeys: string[] = [];
                 if (window?.localStorage) {
 
@@ -32,7 +38,7 @@
                                 data.hasOwnProperty("runSessions") &&
                                 data.hasOwnProperty("actionItems") &&
                                 data.hasOwnProperty("type") &&
-                                data.type === appNames.TEAM_HEALTH
+                                data.type === APPS[this.projectType].code
                             );
                         } catch (error) {
                             return false;
