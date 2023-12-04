@@ -1,11 +1,13 @@
 import { createMachine, interpret, assign } from "xstate";
 import { getCurrentPage } from "../helpers/utils";
-import { getCurrentContext, groupsLength, createEmptyRunSession } from "../helpers/contextOperations"
+import { defaultContext, getCurrentContext, groupsLength, createEmptyRunSession, createNewContext } from "../helpers/contextOperations"
 import { type ProjectData, type ActionItem } from "../data-objects/types"
 
 export type KindOfVote = "up" | "down";
 
-const currentProject = window?.localStorage.getItem("currentProject");
+const getCurrentProject = () => {
+    return window?.localStorage.getItem("currentProject");
+}
 
 export interface VoteEvent {
     type: string;
@@ -31,9 +33,15 @@ export interface SwitchEvent {
 }
 
 const machineConfig = {
+    predictableActionArguments: true,
     id: "app",
     initial: getCurrentPage(),
-    context: getCurrentContext(currentProject),
+    context: defaultContext,
+    on: {
+        LOAD: {
+            actions: "loadContext"
+        }
+    },
     states: {
         idle: {},
         home: {
@@ -110,18 +118,26 @@ const machineConfig = {
 
 const options = {
     actions: {
-        newProject: (ctx: ProjectData) =>  {
-            ctx.runSessions.push(createEmptyRunSession());
-            ctx.groupNumber = 0;
+        loadContext: (ctx: ProjectData) => {
+            ctx = getCurrentContext(getCurrentProject(), getCurrentPage())
+            return ctx;
+        },
+        newProject: (ctx: ProjectData, evt: { data: {projectType, projectName} }) =>  {
+            ctx = createNewContext(evt.data.projectType);
+            window?.localStorage.setItem("currentProject", evt.data.projectName);
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+            window.location.href = "dashboard";
             return ctx;
         },
         newRunSession: (ctx: ProjectData) =>  {
             ctx.runSessions.push(createEmptyRunSession());
             ctx.groupNumber = 0;
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
         addActionItem: (ctx: ProjectData, evt: { data: ActionItem }) => {
             ctx.actionItems.push(evt.data);
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
         editItemAt: (
@@ -129,6 +145,7 @@ const options = {
             evt: { data: { index: number; item: ActionItem } }
             ) => {
             ctx.actionItems[evt.data.index] = evt.data.item;
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
         deleteItemAt: (ctx: ProjectData, evt: { data: { index: number } }) => {
@@ -136,6 +153,7 @@ const options = {
                 (_, i) => i !== evt.data.index
             );
             ctx.actionItems = newActionItems;
+            window.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
         addNote: (ctx: ProjectData, evt: NoteEvent) => {
@@ -155,6 +173,7 @@ const options = {
                 ...session,
                 groups: newAttributes,
             };
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
         addVote: (ctx: ProjectData, evt: VoteEvent) => {
@@ -174,18 +193,24 @@ const options = {
                 ...session,
                 groups: newGroups,
             };
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
-        nextGroup: assign({
-            groupNumber: (ctx: ProjectData) => ctx.groupNumber + 1,
-        }),
-        previousGroup: assign({
-            groupNumber: (ctx: ProjectData) => ctx.groupNumber - 1,
-        }),
-        switchGroup: assign({
-            groupNumber: (_ctx: ProjectData, evt: SwitchEvent) =>
-            evt.groupNumber,
-        }),
+        nextGroup: (ctx: ProjectData) =>  {
+            ctx.groupNumber = ctx.groupNumber + 1,
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+            return ctx;
+        },
+        previousGroup: (ctx: ProjectData) =>  {
+            ctx.groupNumber = ctx.groupNumber - 1,
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+            return ctx;
+        },
+        switchGroup: (ctx: ProjectData, evt: SwitchEvent) =>  {
+            ctx.groupNumber = evt.groupNumber
+            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+            return ctx;
+        },
     },
 };
 
@@ -194,7 +219,7 @@ const appMachine = createMachine(machineConfig, options);
 const actor = interpret(appMachine).start();
 
 actor.subscribe((state) => {
-    window?.localStorage.setItem(currentProject, JSON.stringify(state.context));
+    console.log("state: ",state);
 });
 
 export default actor;

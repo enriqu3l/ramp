@@ -1,44 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import { APPS } from "../helpers/constants";
 ---
 
 <Layout title="RAMP">
   <main>
     <div class="container mx-auto">
-      <h1><span class="text-gradient">RAMP</span></h1>
-      <p class="instructions">
-        Looking to elevate your organization's performance and boost team
-        efficiency?
-        <br />Look no further! I am thrilled to unveil our cutting-edge <strong
-          >RAMP</strong
-        > assessment platform, designed to revolutionize the way you evaluate
-        your team's processes and capabilities.
-      </p>
+      <div style="max-width: 54rem; width: fit-content;">
+        <h1><span class="text-gradient">RAMP</span></h1>
+        <div class="card bg-base-100 shadow-xl">
+          <p class="card-body">
+            Looking to elevate your organization's performance and boost team
+            efficiency?
+            <br />Look no further! I am thrilled to unveil our cutting-edge RAMP
+            assessment platform, designed to revolutionize the way you evaluate
+            your team's processes and capabilities.
+          </p>
+        </div>
+      </div>
     </div>
     <div class="container mx-auto">
       <Card
-        href="select-project?app=THC"
-        title="Team Health Check"
-        body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+        href="select-project?app=thc"
+        title={APPS.THC.name}
+        body={APPS.THC.shortDescription}
         img="/public/team_health_check.png"
       />
       <Card
-        href="select-project?app=QAMA"
-        title="QA Assessment"
-        body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
-        img="/public/qa_assessment.png"
-      />
-      <Card
-        href="select-project"
-        title="Team Health Check"
-        body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
-        img="/public/team_health_check.png"
-      />
-      <Card
-        href="select-project"
-        title="QA Assessment"
-        body="Con esta herramienta, podrás realizar un seguimiento del progreso a lo largo del tiempo, establecer objetivos claros y realizar ajustes en tu enfoque de gestión según sea necesario."
+        href="select-project?app=qama"
+        title={APPS.QAMA.name}
+        body={APPS.QAMA.shortDescription}
         img="/public/qa_assessment.png"
       />
     </div>

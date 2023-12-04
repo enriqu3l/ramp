@@ -1,5 +1,5 @@
-import THC from "./THC_data";
-import QAMA from "./QAMA_data";
+import THC from "./THC";
+import QAMA from "./QAMA";
 
 export default {
     THC,

@@ -119,4 +119,4 @@ const groups: Group[] = [
   },
 ];
 
-export default groups;
+export { groups }

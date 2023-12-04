@@ -1,37 +1,44 @@
 <script lang="ts">
-    import { createNewContext } from "../helpers/contextOperations";
+    import { createNewContext, defaultContext } from "../helpers/contextOperations";
     import { useActor } from "@xstate/vue";
+    import actor from "../state-machines/appMachine"
 
     export default{
+        props: ['app'],
+        setup() {
+            const { state, send } = useActor(actor);
+            return {
+                state,
+                newProject: (projectType, projectName) => {
+                    send({ type: "NEW_PROJECT", data: { projectType, projectName }});
+                }
+            };
+        },
         data() {
             return {
-                projectName: "",
-                projectType: ""
+                inputProjectName: "",
+                projectType: this.app,
             }
         },
-        mounted(){
-            let params = (new URL(window.location.href)).searchParams;
-            this.projectType = params.get("app");
+        mounted() {
+            //No longer needed as we are using props
+            //let params = (new URL(window.location.href)).searchParams;
+            //this.projectType = params.get("app");
+
+            //Example of how to load the context
+            //send({ type: "LOAD" });
         },
         methods: {
             submit: function(e) {
                 e.preventDefault();
-                console.log("projectType: ", this.projectType);
-                const projectExists = window.localStorage.getItem(this.projectName);
-                
-                let context = createNewContext(this.projectType);
+                const projectExists = window.localStorage.getItem(this.inputProjectName);
 
                 if (!projectExists) {
-                    let currentProject = this.projectType + "_" + this.projectName;
-                    window.localStorage.setItem(
-                        currentProject,
-                        JSON.stringify(context)
-                    );
-                    window.localStorage.setItem("currentProject", currentProject);
-                    window.location.href = "dashboard";
+                    let projectName = this.projectType + "_" + this.inputProjectName;
+                    this.newProject(this.projectType, projectName);
                 } else {
                     alert(
-                        `Project ${this.projectName} already exist, please choose a different name`
+                        `Project ${this.inputProjectName} already exist, please choose a different name`
                     );
                 }
             }
@@ -43,11 +50,11 @@
     <form @submit="submit">
         <div class="input-group">
             <input
-                v-model="projectName"
+                v-model="inputProjectName"
                 type="text"
                 placeholder="Project's name"
                 class="input input-bordered input-primary w-full max-w-xs"
-                name="projectName"
+                name="inputProjectName"
                 required
             />
             <button type="submit" id="newProjectSubmit" class="btn btn-primary"

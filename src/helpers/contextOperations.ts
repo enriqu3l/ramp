@@ -1,5 +1,5 @@
 import type { ProjectData, RunSession, Notes, Votes } from "../data-objects/types";
-import groups from "../templates/THC_data";
+import { groups } from "../templates/THC";
 
 import { getTodayAsYYYYMMDD } from "./date";
 
@@ -59,9 +59,13 @@ const createNewContext = (projectType) => {
  * Get context from Local Storage
  * @param  {string} project String from local storage
  */
-const getCurrentContext = (project): ProjectData => {
-  if (!project) {
+const getCurrentContext = (project, page): ProjectData => {
+  if (!project && page!="selectProject") {
     window.location.href = "";
+    return defaultContext;
+  }
+  if (!project) {
+    
     return defaultContext;
   }
   const savedSession = window?.localStorage.getItem(project);

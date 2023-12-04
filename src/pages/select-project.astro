@@ -1,25 +1,40 @@
 ---
+export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import ImportProject from "../components/ImportProject.vue";
 import NewProject from "../components/NewProject.vue";
 import ProjectList from "../components/ProjectList.vue";
+import { APPS } from "../helpers/constants";
+
+const app = Astro.url.searchParams.get("app").toUpperCase()! || "";
+let appName;
+let appDescription;
+if (APPS[app]) {
+  appName = APPS[app].name;
+  appDescription = APPS[app].description;
+} else {
+  return Astro.redirect("/");
+}
 ---
 
 <Layout title="Select Project">
   <main>
-    <h1>Select Project</h1>
-    <ImportProject client:load />
-    <ProjectList client:only />
-    <NewProject client:load />
+    <h1>{appName}</h1>
+    <div>
+      <p>{appDescription}</p>
+    </div>
+    <ImportProject client:load app={app} />
+    <ProjectList client:only app={app} />
+    <NewProject client:only app={app} />
   </main>
 </Layout>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
+  /*const params = new URLSearchParams(window.location.search);
   const app = params.get("app");
   console.log("params", app);
   const h1 = document.querySelector("h1");
-  h1.innerText = app;
+  h1.innerText = app;*/
 </script>
 
 <style>

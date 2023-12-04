@@ -5,34 +5,31 @@
     import { daysPassed } from "../helpers/date";
 
     export default defineComponent({
-        
+        props: ['app'],
         data() {
             return {
-                projectType: "",
+                projectType: this.app,
                 projectList:[],
             }
         },
         mounted() {
-            let params = (new URL(window.location.href)).searchParams;
-            this.projectType = params.get("app");
+            //No longer needed as we are using props
+            //let params = (new URL(window.location.href)).searchParams;
+            //this.projectType = params.get("app");
         },
         computed: {            
             projectsList() {
-                
-
                 let projectKeys: string[] = [];
                 if (window?.localStorage) {
 
                     const keys = Object.keys(window.localStorage);                              
                     projectKeys = keys.filter((key) => {
-                        
                         const dataStr = window.localStorage.getItem(key);   
                         if (typeof dataStr !== "string") {
                             return false;
                         }
                         try {
                             const data = JSON.parse(dataStr);
-       
                             return (
                                 data &&
                                 data.hasOwnProperty("runSessions") &&
