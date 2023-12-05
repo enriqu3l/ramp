@@ -115,21 +115,21 @@ const machineConfig = {
         },
     }
 }
-
+// TODO: verify if return ctx could be removed
 const options = {
     actions: {
         loadContext: (ctx: ProjectData) => {
             ctx = getCurrentContext(getCurrentProject(), getCurrentPage())
             return ctx;
         },
-        newProject: (ctx: ProjectData, evt: { data: {projectType, projectName} }) =>  {
+        newProject: (ctx: ProjectData, evt: { data: { projectType, projectName } }) => {
             ctx = createNewContext(evt.data.projectType);
             window?.localStorage.setItem("currentProject", evt.data.projectName);
             window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
-            window.location.href = "dashboard";
+            window.location.href = evt.data.projectType + "/dashboard";
             return ctx;
         },
-        newRunSession: (ctx: ProjectData) =>  {
+        newRunSession: (ctx: ProjectData) => {
             ctx.runSessions.push(createEmptyRunSession());
             ctx.groupNumber = 0;
             window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
@@ -143,7 +143,7 @@ const options = {
         editItemAt: (
             ctx: ProjectData,
             evt: { data: { index: number; item: ActionItem } }
-            ) => {
+        ) => {
             ctx.actionItems[evt.data.index] = evt.data.item;
             window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
@@ -161,7 +161,7 @@ const options = {
             const attributeWithVote = session.groups[ctx.groupNumber];
             const newNotes = attributeWithVote.notes.map((note, index) => {
                 if (index === evt.data.questionNumber) {
-                return { ...note, [evt.data.type]: evt.data.value };
+                    return { ...note, [evt.data.type]: evt.data.value };
                 }
                 return note;
             });
@@ -181,7 +181,7 @@ const options = {
             const groupWithVote = session.groups[ctx.groupNumber];
             const newVotes = groupWithVote.votes.map((vote, index) => {
                 if (index === evt.data.questionNumber) {
-                return { ...vote, [evt.data.type]: evt.data.value };
+                    return { ...vote, [evt.data.type]: evt.data.value };
                 }
                 return vote;
             });
@@ -196,17 +196,17 @@ const options = {
             window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
-        nextGroup: (ctx: ProjectData) =>  {
+        nextGroup: (ctx: ProjectData) => {
             ctx.groupNumber = ctx.groupNumber + 1,
-            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+                window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
-        previousGroup: (ctx: ProjectData) =>  {
+        previousGroup: (ctx: ProjectData) => {
             ctx.groupNumber = ctx.groupNumber - 1,
-            window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
+                window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
         },
-        switchGroup: (ctx: ProjectData, evt: SwitchEvent) =>  {
+        switchGroup: (ctx: ProjectData, evt: SwitchEvent) => {
             ctx.groupNumber = evt.groupNumber
             window?.localStorage.setItem(getCurrentProject(), JSON.stringify(ctx));
             return ctx;
@@ -218,8 +218,6 @@ const appMachine = createMachine(machineConfig, options);
 
 const actor = interpret(appMachine).start();
 
-actor.subscribe((state) => {
-    console.log("state: ",state);
-});
+actor.subscribe((state) => { });
 
 export default actor;

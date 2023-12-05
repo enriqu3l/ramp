@@ -6,7 +6,7 @@ import NewProject from "../components/NewProject.vue";
 import ProjectList from "../components/ProjectList.vue";
 import { APPS } from "../helpers/constants";
 
-const app = Astro.url.searchParams.get("app").toUpperCase()! || "";
+const app = Astro.url.searchParams.get("app").toLowerCase()! || "";
 let appName;
 let appDescription;
 if (APPS[app]) {
