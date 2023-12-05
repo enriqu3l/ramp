@@ -6,6 +6,7 @@ export default {
     extend: {},
   },
   daisyui: {
-    themes: false, // false= only light + dark
+    themes: false, // false: only light + dark
+    styled: true
   }
 }
