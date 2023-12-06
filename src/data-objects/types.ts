@@ -16,11 +16,13 @@ export interface GroupQuestion {
 export interface Votes {
   up: number;
   down: number;
+  side: number;
 }
 
 export interface Notes {
   up: string;
   down: string;
+  side: string;
 }
 
 export interface GroupWithVotes extends Group {
