@@ -36,7 +36,7 @@ export default {
 
 <template>
     <div>
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-300">
 
             <a v-bind:href=this.backSelectProjectPage className="btn btn-ghost normal-case text-xl">
                 🏠
