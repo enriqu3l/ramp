@@ -36,11 +36,9 @@ const machineConfig = {
     predictableActionArguments: true,
     id: "app",
     initial: getCurrentPage(),
-    context: defaultContext,
+    context: getCurrentContext(getCurrentProject(), getCurrentPage()),
     on: {
-        LOAD: {
-            actions: "loadContext"
-        }
+        LOAD: {}
     },
     states: {
         idle: {},
@@ -118,10 +116,6 @@ const machineConfig = {
 // TODO: verify if return ctx could be removed
 const options = {
     actions: {
-        loadContext: (ctx: ProjectData) => {
-            ctx = getCurrentContext(getCurrentProject(), getCurrentPage())
-            return ctx;
-        },
         newProject: (ctx: ProjectData, evt: { data: { projectType, projectName } }) => {
             ctx = createNewContext(evt.data.projectType);
             window?.localStorage.setItem("currentProject", evt.data.projectName);
@@ -218,6 +212,8 @@ const appMachine = createMachine(machineConfig, options);
 
 const actor = interpret(appMachine).start();
 
-actor.subscribe((state) => { });
+actor.subscribe((state) => {
+    console.log(state);
+});
 
 export default actor;

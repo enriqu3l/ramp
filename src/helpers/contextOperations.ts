@@ -45,8 +45,8 @@ const createNewContext = (projectType) => {
         date: today,
         groups: groups.map((group) => ({
             ...group,
-            votes: group.questions.map(() => ({ up: 0, down: 0 })),
-            notes: group.questions.map(() => ({ up: "", down: "" })),
+            votes: group.questions.map(() => ({ up: 0, down: 0, side: 0 })),
+            notes: group.questions.map(() => ({ up: "", down: "", side: "" })),
         })),
     });
     context.type = projectType;
@@ -58,33 +58,15 @@ const createNewContext = (projectType) => {
 /**
  * Get context from Local Storage
  * @param  {string} project String from local storage
+ * @param  {string} page String of the current page
  */
 const getCurrentContext = (project, page): ProjectData => {
-  if (!project && page!="selectProject") {
-    window.location.href = "";
-    return defaultContext;
-  }
-  if (!project) {
-    
+  if (!project || page == "selectProject") {
     return defaultContext;
   }
   const savedSession = window?.localStorage.getItem(project);
-  let context = savedSession ? JSON.parse(savedSession) : defaultContext;
-  const today = getTodayAsYYYYMMDD();
 
-  if (context.runSessions.length === 0) {
-    // sessions are empty, create one.
-    context.runSessions.push({
-      date: today,
-      groups: groups.map((group) => ({
-        ...group,
-        votes: group.questions.map(() => ({ up: 0, down: 0 })),
-        notes: group.questions.map(() => ({ up: "", down: "" })),
-      })),
-    });
-    context.groupNumber = 0;
-  }
-  return context;
+  return savedSession ? JSON.parse(savedSession) : defaultContext;
 }
 
 export {

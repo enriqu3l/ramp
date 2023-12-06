@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { createNewContext, defaultContext } from "../helpers/contextOperations";
     import { useActor } from "@xstate/vue";
     import actor from "../state-machines/appMachine"
 
@@ -20,14 +19,7 @@
                 projectType: this.app,
             }
         },
-        mounted() {
-            //No longer needed as we are using props
-            //let params = (new URL(window.location.href)).searchParams;
-            //this.projectType = params.get("app");
-
-            //Example of how to load the context
-            //send({ type: "LOAD" });
-        },
+        mounted() {},
         methods: {
             submit: function(e) {
                 e.preventDefault();
