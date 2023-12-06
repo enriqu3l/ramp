@@ -16,7 +16,7 @@ export function exportCsv(
   projectName: string
 ): string {
   const metadata = generateProjectMetaData(projectName, projectData.type);
-  const actionItemsCsv = actionItemsToCSV(projectData.actionItems);
+  const actionItemsCsv = actionItemsToCsv(projectData.actionItems);
   const runSessionsCsv = runSessionsToCsv(projectData.runSessions);
   const delim = "\r\n#======\r\n";
   return (
@@ -75,7 +75,7 @@ function runSessionToCSV(
   return res;
 }
 
-function actionItemsToCSV(actionItems: ActionItem[]): CsvDataStructureMultirow {
+function actionItemsToCsv(actionItems: ActionItem[]): CsvDataStructureMultirow {
   const data = {
     fields: ["date", "group", "title", "description", "status", "owner"],
     data: actionItems.map((a) => {
