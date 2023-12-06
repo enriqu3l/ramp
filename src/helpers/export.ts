@@ -37,7 +37,7 @@ function generateProjectMetaData(projectName: string, projectType: string): CsvD
   };
 }
 
-function runSessionToCSV(
+function runSessionToCsv(
   runSession: RunSession
 ): CsvDataStructureMultirow {
   const headers = [
@@ -98,7 +98,7 @@ function actionItemsToCsv(actionItems: ActionItem[]): CsvDataStructureMultirow {
 function runSessionsToCsv(runSessions: RunSession[]): string {
   return runSessions
     .map((session: RunSession) => {
-      return Papa.unparse(runSessionToCSV(session));
+      return Papa.unparse(runSessionToCsv(session));
     })
     .join("\n");
 }
