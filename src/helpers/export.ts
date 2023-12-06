@@ -1,7 +1,6 @@
 import Papa from "papaparse";
 import { getTodayAsYYYYMMDD } from "./date";
 import { type ActionItem, type ProjectData, type RunSession } from "../data-objects/types";
-import { APPS } from "./constants";
 
 interface CsvDataStructureMultirow {
   fields: string[];
@@ -18,12 +17,12 @@ export function exportCsv(
 ): string {
   const metadata = generateProjectMetaData(projectName, projectData.type);
   const actionItemsCsv = actionItemsToCSV(projectData.actionItems);
-  const votingSessionsCsv = runSessionsToCsv(projectData.runSessions);
+  const runSessionsCsv = runSessionsToCsv(projectData.runSessions);
   const delim = "\r\n#======\r\n";
   return (
     Papa.unparse(metadata) +
     delim +
-    votingSessionsCsv +
+    runSessionsCsv +
     delim +
     Papa.unparse(actionItemsCsv)
   );
