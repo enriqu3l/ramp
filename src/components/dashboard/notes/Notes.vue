@@ -43,6 +43,7 @@ export default {
             return this.groups
                 .map((group, index) => {
                     const groupWithVotes = this.lastSession.groups[index];
+                    // TODO: Its hardcoded, we need Navigate through all the questions
                     const votes = groupWithVotes.votes[0];
                     const notes = groupWithVotes.notes[0];
                     const npsScore = calculateNpsScore(votes).toFixed(2);
