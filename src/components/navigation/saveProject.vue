@@ -1,4 +1,6 @@
 <script lang="ts">
+import { exportCsv } from "../../helpers/export";
+import { getTodayAsYYYYMMDD } from "../../helpers/date";
 
 const activeClasses = "tab-active";
 
@@ -6,14 +8,36 @@ export default {
     name: 'saveProject',
     data() { return {} },
     computed: {},
-    methods: {}
+    methods: {
+
+        exportProject() {
+
+            const currentProjectName = window.localStorage.getItem("currentProject");
+            const dataStr = window.localStorage.getItem(currentProjectName);
+            const data = JSON.parse(dataStr);
+            const resultsStr = exportCsv(data, currentProjectName);
+            const date = getTodayAsYYYYMMDD();
+            const download = document.createElement("a");
+            download.setAttribute("download", `${currentProjectName}_${date}.csv`);
+            download.href = URL.createObjectURL(
+                new Blob([resultsStr], {
+                    type: "text/csv;encoding:utf-8",
+                })
+            );
+
+            document.body.appendChild(download);
+            download.click();
+            document.body.removeChild(download);
+        }
+    }
 }
+
 </script>
 
 <template>
     <div className="activeClasses">
         <a>
-            <button onClick:{exportProject} className="btn btn-ghost mr-2">
+            <button @click=exportProject className="btn btn-ghost mr-2">
                 Save Project
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
                     className="ml-2">
