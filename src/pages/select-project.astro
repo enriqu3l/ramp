@@ -19,29 +19,31 @@ if (APPS[app]) {
 
 <Layout title="Select Project">
   <main>
-    <h1>{appName}</h1>
-    <div>
-      <p>{appDescription}</p>
+    <div class="container mx-auto">
+      <h1>{appName}</h1>
+      <div class="card bg-base-100 shadow-xl">
+        <p class="card-body">{appDescription}</p>
+      </div>
     </div>
-    <ImportProject client:load app={app} />
-    <ProjectList client:only app={app} />
-    <NewProject client:only app={app} />
+    <div class="container mx-auto">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <ImportProject client:load app={app} />
+          <ProjectList client:only app={app} />
+          <NewProject client:only app={app} />
+        </div>
+      </div>
+    </div>
   </main>
 </Layout>
 
-<script>
-  /*const params = new URLSearchParams(window.location.search);
-  const app = params.get("app");
-  console.log("params", app);
-  const h1 = document.querySelector("h1");
-  h1.innerText = app;*/
-</script>
+<script></script>
 
 <style>
   main {
     margin: auto;
     padding: 1rem;
-    width: 800px;
+    width: 100%;
     max-width: calc(100% - 2rem);
     font-size: 20px;
     line-height: 1.6;
@@ -54,34 +56,14 @@ if (APPS[app]) {
     margin-bottom: 1em;
   }
   .container {
-    height: 200px;
-    position: relative;
-    border: 3px solid green;
-  }
-  .vertical-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-  .center {
+    width: 1200px;
     display: flex;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  .block {
-    display: block;
-    width: 100%;
-    border: none;
-    background-color: #04aa6d;
-    padding: 14px 28px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
+  .card {
+    margin: 20px 20px;
+    width: 45rem;
   }
 </style>

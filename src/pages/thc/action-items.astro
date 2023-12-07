@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ActionItemPage from "../../components/Activity.vue";
+import NavigationComponent from "../../components/navigation/navBar.vue";
+---
+
+<Layout title="Activity">
+  <NavigationComponent client:only />
+  <ActionItemPage client:only />
+</Layout>

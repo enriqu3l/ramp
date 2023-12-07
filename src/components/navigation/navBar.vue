@@ -12,10 +12,12 @@ export default {
     data() {
         return {
             backSelectProjectPage: '',
+            backHome: '',
         }
     },
     created() {
-        this.backSelectProjectPage = "http://" + location.host + "/select-project?app=" + arrayUrl[1]
+        this.backSelectProjectPage = "http://" + location.host + "/select-project?app=" + arrayUrl[1];
+        this.backHome = "http://" + location.host;
     },
     components: {
         actionItem,
@@ -38,8 +40,11 @@ export default {
     <div>
         <div className="navbar bg-base-300">
 
-            <a v-bind:href=this.backSelectProjectPage className="btn btn-ghost normal-case text-xl">
+            <a v-bind:href=this.backHome className="btn btn-ghost normal-case text-xl">
                 🏠
+            </a>
+            <a v-bind:href=this.backSelectProjectPage className="btn btn-ghost normal-case text-xl">
+                ⬅️
             </a>
             <a className="flex-1">
                 Current Project: {{ this.projectSelected }}
